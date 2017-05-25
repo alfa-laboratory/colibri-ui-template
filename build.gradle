@@ -1,0 +1,107 @@
+group 'ru.colibri.template'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "ru.d10xa:gradle-allure-plugin:0.5.3"
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.4.9'
+
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'ru.d10xa.allure'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'distribution'
+apply plugin: 'maven-publish'
+apply from: 'loadSettings.gradle'
+
+repositories {
+    maven{
+        url "https://dl.bintray.com/alfa-laboratory/maven-releases/"
+    }
+    jcenter()
+    mavenCentral()
+}
+
+allure {
+    aspectjweaver = true
+    junit = true
+    clean = true
+    allureResultsDir = "${project.buildDir}/reports/allure-results"
+    allureReportDir = "${project.buildDir}/reports/allure-report"
+}
+
+dependencies {
+    compile 'ru.colibri:colibri-ui:1.0.0'
+}
+
+distributions {
+    main {
+        contents {
+            from { "$buildDir/reports/allure-report/" }
+        }
+    }
+}
+
+loadSettings()
+
+distZip.dependsOn 'allureReport'
+
+tasks.withType(Test)*.finalizedBy 'allureReport'
+
+publishing {
+    publications {
+        nebula(MavenPublication) {
+            artifact distZip {
+                classifier 'reports'
+            }
+        }
+    }
+}
+
+test {
+    ignoreFailures = true
+    Map<String, Object> systemProperties = getSystemProperties()
+    if (project.hasProperty("platform")) {
+        systemProperties.put("platform", "$platform")
+    }
+    if (project.hasProperty("user")) {
+        systemProperties.put("user", "$user")
+    }
+    if (project.hasProperty("testType")) {
+        systemProperties.put("testType", "$testType")
+    }
+    if (project.hasProperty("buildVersion")) {
+        systemProperties.put("buildVersion", "$buildVersion")
+    }
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
+
+String repo = 'snapshots'
+artifactory {
+    contextUrl = "${artifactoryUrlString}"
+    publish {
+        repository {
+            repoKey = repo
+            username = "${artifactoryUserString}"
+            password = "${artifactoryPasswordString}"
+        }
+        defaults {
+            publications('nebula')
+        }
+    }
+    resolve {
+        repository {
+            repoKey = 'public'
+            username = "${artifactoryUserString}"
+            password = "${artifactoryPasswordString}"
+            maven = true
+        }
+    }
+}

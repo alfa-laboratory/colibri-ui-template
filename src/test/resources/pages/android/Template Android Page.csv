@@ -1,0 +1,6 @@
+"Template Android Page","",".presentation.TemplateAndroidPageActivity","","",""
+"Name in story","Content-desc","ResourceId","Text","XPath","Flag is specific"
+"Элемент с локатором по content-desk","#SUMM","","","",""
+"Элемент с локатором по id","","dialog_free_mobile_positive","","",""
+"Элемент с локатором по тексту","","","Предложи свою идею","","true"
+"Элемент с локатором по xpath и подстановкой значений из пользователя","","","","//*[@name='#accountNumber#']",""

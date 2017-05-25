@@ -1,0 +1,28 @@
+{
+  "capabilities": [
+    {
+      "browserName": "",
+      "udid": "your_device_udid",
+      "deviceName": "your_device_name",
+      "version": "10",
+      "maxInstances": 5,
+      "platform": "MAC"
+    }
+  ],
+  "configuration": {
+    "cleanUpCycle": 2000,
+    "timeout": 30000,
+    "hub": "http://localhost:5566/grid/register/",
+    "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
+    "url": "http://127.0.0.1:4726/wd/hub",
+    "remoteHost": "http://127.0.0.1:4726",
+    "host": "localhost",
+    "port": 4726,
+    "maxSession": 5,
+    "register": true,
+    "registerCycle": 5000,
+    "hubPort": 5566,
+    "hubHost": "localhost",
+    "role": "node"
+  }
+}
