@@ -14,9 +14,6 @@ import ru.colibri.ui.settings.general.GeneralConfig;
 import ru.colibri.ui.template.settings.ios.IOSConfig;
 
 
-/**
- * Created by dolinskiyaleksandr on 07.11.16.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {GeneralConfig.class, IOSConfig.class})
 public class IOSStories extends AbstractStories {

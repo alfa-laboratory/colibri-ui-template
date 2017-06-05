@@ -14,7 +14,7 @@ import ru.colibri.ui.settings.loaders.ISettingsLoader;
 import static ru.colibri.ui.core.names.ColibriStartFlags.*;
 
 /**
- * ентральный класс настройки запуска проекта для  iOS
+ * Центральный класс настройки запуска проекта для  iOS
  */
 @Configuration
 @ComponentScan(basePackages = {"ru.colibri.ui.settings.ios", "ru.colibri.ui.steps.ios",

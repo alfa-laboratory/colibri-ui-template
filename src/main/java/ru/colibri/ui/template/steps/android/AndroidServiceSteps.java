@@ -12,9 +12,6 @@ import ru.colibri.ui.steps.general.PagesSteps;
 import ru.yandex.qatools.allure.annotations.Step;
 
 
-/**
- * Created by dolinskiyaleksandr on 13.03.17.
- */
 @Component
 public class AndroidServiceSteps extends AbsServiceSteps {
     @Autowired

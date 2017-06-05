@@ -11,9 +11,6 @@ import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.HashMap;
 
-/**
- * Created by dolinskiyaleksandr on 03.04.17.
- */
 @Component
 public class IOSHorizontalSwipe extends AbsSteps {
 
