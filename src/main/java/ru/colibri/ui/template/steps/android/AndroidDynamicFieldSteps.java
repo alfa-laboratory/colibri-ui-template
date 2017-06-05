@@ -1,4 +1,4 @@
-package ru.colibri.template.steps.android;
+package ru.colibri.ui.template.steps.android;
 
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -9,9 +9,9 @@ import org.openqa.selenium.interactions.Keyboard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import ru.alfabank.autotest.core.fields.IElement;
-import ru.alfabank.autotest.core.steps.AbsSteps;
-import ru.alfabank.autotest.settings.general.PropertyUtils;
+import ru.colibri.ui.core.fields.IElement;
+import ru.colibri.ui.core.steps.AbsSteps;
+import ru.colibri.ui.settings.general.PropertyUtils;
 import ru.yandex.qatools.allure.annotations.Step;
 
 import static java.lang.String.format;

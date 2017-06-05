@@ -1,11 +1,11 @@
-package ru.colibri.template.settings.ios;
+package ru.colibri.ui.template.settings.ios;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import ru.alfabank.autotest.core.settings.AppSettings;
-import ru.alfabank.autotest.core.settings.DriversSettings;
-import ru.alfabank.autotest.settings.general.PropertyUtils;
-import ru.alfabank.autotest.settings.loaders.AbsSettingsLoader;
+import ru.colibri.ui.core.settings.AppSettings;
+import ru.colibri.ui.core.settings.DriversSettings;
+import ru.colibri.ui.settings.general.PropertyUtils;
+import ru.colibri.ui.settings.loaders.AbsSettingsLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Properties;
 
 import static java.lang.String.format;
+import static ru.colibri.ui.core.names.ColibriStartFlags.BUILD_VERSION;
+import static ru.colibri.ui.template.names.PropertyNames.*;
 
 /**
  * Класс отвечающий за загрузку настроек приложения и окружения Андроид
@@ -41,33 +43,35 @@ public class IOSSettingsLoader extends AbsSettingsLoader {
         List<String> packageList = createPackageList();
 
         return DriversSettings.builder()
-                .appiumRemoteUrl(props.getProperty("remoteUrl"))
-                .deviceName(props.getProperty("deviceName"))
-                .filePath(props.getProperty("filePath"))
+                .appiumRemoteUrl(props.getProperty(APPIUM_REMOTE_URL))
+                .deviceName(props.getProperty(DEVICE_NAME))
+                .filePath(props.getProperty(FILE_PATH))
                 .implicitlyWaitInSeconds(20)
                 .findingTimeOutInSeconds(20)
                 .newCommandTimeoutInSeconds(20)
                 .storyTimeoutsInSeconds("7200")
                 .stepsPackages(packageList)
-                .storyPath(props.getProperty("storyPath"))
-                .storyToInclude(props.getProperty("storyToInclude"))
-                .storyToExclude(props.getProperty("storyToExclude"))
-                .pagesPath(props.getProperty("pagesPath"))
-                .UDID(props.getProperty("UDID"))
-                .wdaLocalPort(Integer.parseInt(props.getProperty("wdaLocalPort")))
+                .storyPath(props.getProperty(STORY_PATH))
+                .storyToInclude(props.getProperty(STORY_TO_INCLUDE))
+                .storyToExclude(props.getProperty(STORY_TO_EXCLUDE))
+                .pagesPath(props.getProperty(PAGES_PATH))
+                .UDID(props.getProperty(UDID))
+                .wdaLocalPort(Integer.parseInt(props.getProperty(WDA_LOCAL_PORT)))
                 .build();
     }
 
     private List<String> createPackageList() {
         List<String> packageList = new ArrayList<>(2);
-        packageList.add("ru.alfabank.autotest.steps.general");
-        packageList.add("ru.alfabank.autotest.steps.ios");
+        packageList.add("ru.colibri.ui.steps.general");
+        packageList.add("ru.colibri.ui.steps.ios");
+        packageList.add("ru.colibri.ui.template.steps.general");
+        packageList.add("ru.colibri.ui.template.steps.ios");
         return packageList;
     }
 
     private void loadArtifactByRemoteRepo(Properties props) {
-        String remoteFilePath = props.getProperty("remoteFilePath");
-        remoteFilePath = format(remoteFilePath, System.getProperty("buildVersion"));
-        takeArtifact(remoteFilePath, props.getProperty("filePath"));
+        String remoteFilePath = props.getProperty(REMOTE_FILE_PATH);
+        remoteFilePath = format(remoteFilePath, System.getProperty(BUILD_VERSION));
+        takeArtifact(remoteFilePath, props.getProperty(FILE_PATH));
     }
 }

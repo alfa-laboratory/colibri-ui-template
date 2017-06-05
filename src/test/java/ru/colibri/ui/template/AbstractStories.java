@@ -1,4 +1,4 @@
-package ru.colibri.template;
+package ru.colibri.ui.template;
 
 import io.appium.java_client.AppiumDriver;
 import org.jbehave.core.configuration.Configuration;
@@ -11,20 +11,16 @@ import org.jbehave.core.steps.spring.SpringStepsFactory;
 import org.junit.After;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import ru.alfabank.autotest.core.pages.IPage;
-import ru.alfabank.autotest.core.pages.IPageProvider;
-import ru.alfabank.autotest.core.settings.DriversSettings;
-import ru.alfabank.autotest.core.settings.IJBConfigurator;
-import ru.alfabank.autotest.core.settings.TestSettings;
-import ru.alfabank.autotest.core.utils.FileUtils;
-import ru.alfabank.autotest.settings.general.PagesLoader;
+import ru.colibri.ui.core.pages.IPage;
+import ru.colibri.ui.core.pages.IPageProvider;
+import ru.colibri.ui.core.settings.DriversSettings;
+import ru.colibri.ui.core.settings.IJBConfigurator;
+import ru.colibri.ui.core.settings.TestSettings;
+import ru.colibri.ui.core.utils.FileUtils;
+import ru.colibri.ui.settings.general.PagesLoader;
 
 import java.io.File;
 import java.util.List;
-
-/**
- * Created by dolinskiyaleksandr on 07.11.16.
- */
 
 public abstract class AbstractStories extends JUnitStories {
 

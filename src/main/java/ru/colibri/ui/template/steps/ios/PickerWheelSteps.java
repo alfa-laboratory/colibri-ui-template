@@ -1,4 +1,4 @@
-package ru.colibri.template.steps.ios;
+package ru.colibri.ui.template.steps.ios;
 
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.When;
@@ -6,10 +6,11 @@ import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.alfabank.autotest.core.exception.NotValueOnPickerException;
-import ru.alfabank.autotest.core.fields.Element;
-import ru.alfabank.autotest.core.fields.IElement;
-import ru.alfabank.autotest.settings.general.PropertyUtils;
+import ru.colibri.ui.core.exception.NotValueOnPickerException;
+import ru.colibri.ui.core.fields.Element;
+import ru.colibri.ui.core.fields.IElement;
+import ru.colibri.ui.settings.general.PropertyUtils;
+import ru.colibri.ui.steps.ios.BaseIOSPickerWheelSteps;
 import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;

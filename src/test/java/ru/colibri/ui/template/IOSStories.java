@@ -1,47 +1,51 @@
-package ru.colibri.template;
+package ru.colibri.ui.template;
 
 import io.appium.java_client.AppiumDriver;
-import lombok.extern.java.Log;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.alfabank.autotest.core.pages.IPageProvider;
-import ru.alfabank.autotest.core.settings.DriversSettings;
-import ru.alfabank.autotest.settings.general.GeneralConfig;
-import ru.colibri.template.settings.android.AndroidConfig;
+import ru.colibri.ui.core.names.ColibriStartFlags;
+import ru.colibri.ui.core.pages.IPageProvider;
+import ru.colibri.ui.core.settings.DriversSettings;
+import ru.colibri.ui.settings.general.GeneralConfig;
+import ru.colibri.ui.template.settings.ios.IOSConfig;
 
-@Log
+
+/**
+ * Created by dolinskiyaleksandr on 07.11.16.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {GeneralConfig.class, AndroidConfig.class})
-public class AndroidStories extends AbstractStories {
+@ContextConfiguration(classes = {GeneralConfig.class, IOSConfig.class})
+public class IOSStories extends AbstractStories {
 
     @Autowired
-    @Qualifier("android")
+    @Qualifier("ios")
     private IPageProvider pageProvider;
 
     @Autowired
-    @Qualifier("android")
+    @Qualifier("ios")
     private DriversSettings driversSettings;
 
     @Autowired
-    @Qualifier("android")
+    @Qualifier("ios")
     private AppiumDriver driver;
 
-    public AndroidStories() {
+    public IOSStories() {
         super();
-        System.setProperty("amUser", "6016680");
-        System.setProperty("platform", "android6");
-        System.setProperty("testType", "smoke");
-        System.setProperty("buildVersion", "8.4.0.7");
+        System.setProperty(ColibriStartFlags.USER, "1907306");
+        System.setProperty(ColibriStartFlags.PLATFORM, "ios10");
+        System.setProperty(ColibriStartFlags.TEST_TYPE, "smoke");
+        System.setProperty(ColibriStartFlags.BUILD_VERSION, "8.3_7426");
     }
 
     @Before
     public void before() {
         initPageProvider();
     }
+
 
     @Override
     protected IPageProvider getPageProvider() {
@@ -57,6 +61,4 @@ public class AndroidStories extends AbstractStories {
     protected AppiumDriver getDriver() {
         return driver;
     }
-
-
 }

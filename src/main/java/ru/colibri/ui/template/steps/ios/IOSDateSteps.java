@@ -1,11 +1,11 @@
-package ru.colibri.template.steps.ios;
+package ru.colibri.ui.template.steps.ios;
 
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.openqa.selenium.By;
 import org.springframework.stereotype.Component;
-import ru.alfabank.autotest.core.steps.AbsSteps;
+import ru.colibri.ui.core.steps.AbsSteps;
 import ru.yandex.qatools.allure.annotations.Step;
 
 import java.text.SimpleDateFormat;

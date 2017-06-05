@@ -1,4 +1,4 @@
-package ru.colibri.template.settings.ios;
+package ru.colibri.ui.template.settings.ios;
 
 import io.appium.java_client.ios.IOSDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,16 +6,19 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import ru.alfabank.autotest.core.settings.AppSettings;
-import ru.alfabank.autotest.core.settings.DriversSettings;
-import ru.alfabank.autotest.core.settings.TestSettings;
-import ru.alfabank.autotest.settings.loaders.ISettingsLoader;
+import ru.colibri.ui.core.settings.AppSettings;
+import ru.colibri.ui.core.settings.DriversSettings;
+import ru.colibri.ui.core.settings.TestSettings;
+import ru.colibri.ui.settings.loaders.ISettingsLoader;
+
+import static ru.colibri.ui.core.names.ColibriStartFlags.*;
 
 /**
  * ентральный класс настройки запуска проекта для  iOS
  */
 @Configuration
-@ComponentScan(basePackages = {"ru.alfabank.autotest.settings.ios", "ru.alfabank.autotest.steps.ios"})
+@ComponentScan(basePackages = {"ru.colibri.ui.settings.ios", "ru.colibri.ui.steps.ios",
+        "ru.colibri.ui.template.settings.ios", "ru.colibri.ui.template.steps.ios"})
 public class IOSConfig {
 
 
@@ -38,19 +41,19 @@ public class IOSConfig {
     @Bean
     @Qualifier("ios")
     public DriversSettings getDriversSettings() {
-        return iSettingsLoader.loadDriverSettings(System.getProperty("platform"));
+        return iSettingsLoader.loadDriverSettings(System.getProperty(PLATFORM));
     }
 
     @Bean
     @Qualifier("ios")
     public AppSettings getAppSettings() {
-        return iSettingsLoader.loadAppSettings(System.getProperty("user"));
+        return iSettingsLoader.loadAppSettings(System.getProperty(USER));
     }
 
     @Bean
     @Qualifier("ios")
     public TestSettings getTestSettings() {
-        return iSettingsLoader.loadTestSettings(System.getProperty("testType"));
+        return iSettingsLoader.loadTestSettings(System.getProperty(TEST_TYPE));
     }
 
 
