@@ -14,8 +14,7 @@ import java.util.Properties;
 
 import static java.lang.String.format;
 import static ru.colibri.ui.core.names.ColibriStartFlags.BUILD_VERSION;
-import static ru.colibri.ui.template.names.AndroidAppNames.PACKAGE_NAME;
-import static ru.colibri.ui.template.names.AndroidAppNames.START_PAGE_ID;
+import static ru.colibri.ui.template.names.AndroidAppNames.*;
 import static ru.colibri.ui.template.names.PropertyNames.*;
 
 /**
@@ -35,6 +34,7 @@ public class AndroidSettingsLoader extends AbsSettingsLoader {
         return AppSettings.builder()
                 .packageName(appProperty.getProperty(PACKAGE_NAME))
                 .startPageId(appProperty.getProperty(START_PAGE_ID))
+                .activityUse(Boolean.valueOf(appProperty.getProperty(ACTIVITY_USE)))
                 .userProfile(map)
                 .build();
     }
