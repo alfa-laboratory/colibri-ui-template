@@ -51,9 +51,9 @@ sh scripts/stop.sh &lt;платформа&gt;
 
 ## Пример команды для запуска проекта на локальном ПК (MAC):
 ```
-1) ./gradlew --info clean test --tests "*AndroidStories*" -Pplatform=android5 -Puser=6016680 -PtestType=smoke -PbuildVersion=8.4.0.0-SNAPSHOT
-2) ./gradlew --info clean test --tests "*AndroidStories*" -Pplatform=android4 -Puser=5773935 -PtestType=smoke -PbuildVersion=8.4.0.0-SNAPSHOT
-3) ./gradlew --info clean test --tests "*IOSStories*" -Pplatform=ios10.2 -Puser=1907306 -PtestType=regress -PbuildVersion=8.3_7426
+1) ./gradlew --info clean test --tests "*AndroidStories*" -Dorg.gradle.project.platform=android5 -Dorg.gradle.project.user=6016680 -Dorg.gradle.project.testType=smoke -Dorg.gradle.project.buildVersion=8.4.0.0-SNAPSHOT
+2) ./gradlew --info clean test --tests "*AndroidStories*" -Dorg.gradle.project.platform=android4 -Dorg.gradle.project.user=5773935 -Dorg.gradle.project.testType=smoke -Dorg.gradle.project.buildVersion=8.4.0.0-SNAPSHOT
+3) ./gradlew --info clean test --tests "*IOSStories*" -Dorg.gradle.project.platform=ios10.2 -Dorg.gradle.project.user=1907306 -Dorg.gradle.project.testType=regress -Dorg.gradle.project.buildVersion=8.3_7426
 ```
 ## Команды для быстрого уничтожения кластера в системе 
 kill seleniumhub.pid
@@ -77,3 +77,45 @@ kill appium.pid
 /usr/local/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent/
 Необходимо открыть при помощи xcode файл с расширением .xcodeproj, выбрать верхний пункт в левой панели и установить Team в двух элементах из раздела Targets - WebDriverAgentLib и WebDriverAgentRunner. В выпадающем списке выберите любой сертификат разработчика с возможностью установки приложения на реальный девайс.
 Для работы с симулятором подобный сертификат не обязателен.
+
+
+###  FAQ по написаию тестов
+##### Чтобы найти Activity:
+1) подключаем телефон через usb
+2) запускаем приложеньку и переходим на интересующий нас экран
+3) команду в терминале
+
+```
+adb shell dumpsys window windows | grep -E 'mCurrentFocus'
+```
+##### Чтобы узнать UUID подключенного девайса
+
+Android
+```
+adb devices
+```
+
+iOS
+```
+железки (все кроме симуляторов и текущего бука)
+instruments -s devices | grep -v (Simulator|$(id -un))
+
+симуляторы
+instruments -s devices | grep Simulator
+```
+
+##### Монитор для андроида
+
+```open ~/Library/Android/sdk/tools/monitor```
+
+##### Остановить все процессы
+```
+pkill -f selenium
+pkill -f appium
+```
+
+# Локальный запуск в IDE
+
+1. Запускаем appium в консоли. `appium`
+2. В файлах environmentAndroid/environmentIOS меняем порт с 5566 на 4723
+3. Заходим в Edit Configuration и настраиваем значения в Environment variables устанавливаем значение, например `platform=ios10sim;user=1907306;testType=debugMode;buildVersion=9.1_8361`. Аналогично каждый параметр можно выставаить в табличном виде, нажав на три точки в конце этой строки.
