@@ -1,3 +1,6 @@
+<img align="left" width="140" height="140" title="colibri-ui-template"
+     src="https://rawgit.com/alfa-laboratory/colibri-ui-template/master/collibri_template_logo.svg" />
+     
 # Colibri-ui-template
 
 ## Папки проекта:
