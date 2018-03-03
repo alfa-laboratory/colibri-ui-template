@@ -1,4 +1,3 @@
-group 'ru.colibri.template'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -8,7 +7,6 @@ buildscript {
     dependencies {
         classpath "ru.d10xa:gradle-allure-plugin:0.5.3"
         classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.4.9'
-
     }
 }
 
@@ -36,7 +34,9 @@ allure {
 }
 
 dependencies {
-    compile 'ru.colibri:colibri-ui:1.0.7-rc-3'
+    compile 'ru.colibri:colibri-ui:1.1.3-rc-10'
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.github.reportportal:agent-java-jbehave:-SNAPSHOT'
 }
 
 distributions {
@@ -52,12 +52,13 @@ loadSettings()
 distZip.dependsOn 'allureReport'
 
 tasks.withType(Test)*.finalizedBy 'allureReport'
+def artifactName = "report-"
 
 publishing {
     publications {
         nebula(MavenPublication) {
             artifact distZip {
-                classifier 'reports'
+                classifier artifactName
             }
         }
     }
@@ -65,43 +66,37 @@ publishing {
 
 test {
     ignoreFailures = true
-    Map<String, Object> systemProperties = getSystemProperties()
+    Map<String, Object> systemProperties = getEnvironment()
+    def runDescription
+    def runTags
     if (project.hasProperty("platform")) {
         systemProperties.put("platform", "$platform")
+        artifactName = artifactName+"$platform"
+        runDescription = "Platform: $platform"
+        runTags = "$runDescription".contains("iPhone")? "iOS":"Android"
     }
     if (project.hasProperty("user")) {
         systemProperties.put("user", "$user")
+        runDescription = "$runDescription User: $user"
+        runTags = "$runTags;$user"
     }
     if (project.hasProperty("testType")) {
         systemProperties.put("testType", "$testType")
+        runDescription = "$runDescription Cycle: $testType"
+        runTags = "$runTags;$testType"
     }
     if (project.hasProperty("buildVersion")) {
         systemProperties.put("buildVersion", "$buildVersion")
+        artifactName = artifactName+"-"+"$buildVersion"
+        runDescription = "$runDescription Build: $buildVersion"
+        runTags = "$runTags;$buildVersion"
     }
+    if (project.hasProperty("rptags")){
+        runTags = "$runTags;$rptags"
+    }
+    systemProperties.put("rp.description","$runDescription")
+    systemProperties.put("rp.tags","$runTags")
     testLogging {
         events "passed", "skipped", "failed", "standardOut", "standardError"
-    }
-}
-
-String repo = 'snapshots'
-artifactory {
-    contextUrl = "${artifactoryUrlString}"
-    publish {
-        repository {
-            repoKey = repo
-            username = "${artifactoryUserString}"
-            password = "${artifactoryPasswordString}"
-        }
-        defaults {
-            publications('nebula')
-        }
-    }
-    resolve {
-        repository {
-            repoKey = 'public'
-            username = "${artifactoryUserString}"
-            password = "${artifactoryPasswordString}"
-            maven = true
-        }
     }
 }

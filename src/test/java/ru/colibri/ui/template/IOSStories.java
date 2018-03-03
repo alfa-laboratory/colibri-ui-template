@@ -30,14 +30,6 @@ public class IOSStories extends AbstractStories {
     @Qualifier("ios")
     private AppiumDriver driver;
 
-    public IOSStories() {
-        super();
-        System.setProperty(ColibriStartFlags.USER, "1907306");
-        System.setProperty(ColibriStartFlags.PLATFORM, "ios10");
-        System.setProperty(ColibriStartFlags.TEST_TYPE, "smoke");
-        System.setProperty(ColibriStartFlags.BUILD_VERSION, "8.3_7426");
-    }
-
     @Before
     public void before() {
         initPageProvider();

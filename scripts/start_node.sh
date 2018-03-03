@@ -11,4 +11,5 @@ echo $PATH
 argum=$"-p ${port} --nodeconfig $SCR_PATH/src/test/resources/environment/${platform_name}/test_node.json"
 screen -dmS ${platform_name} /usr/local/bin/appium ${argum}
 echo $! > ${SCR_PATH}/src/test/resources/environment/${platform_name}/appium.pid
+sleep 5  # эта задержка нужна чтоб нода успела тартануть
 echo Node started!

@@ -21,7 +21,6 @@ import static ru.colibri.ui.core.names.ColibriStartFlags.*;
         "ru.colibri.ui.template.settings.ios", "ru.colibri.ui.template.steps.ios"})
 public class IOSConfig {
 
-
     @Autowired
     @Qualifier("ios")
     private IOSDriverConfigurator driverConfigurator;
@@ -34,26 +33,25 @@ public class IOSConfig {
     @Bean
     @Qualifier("ios")
     public IOSDriver getIOSDriver() {
-        IOSDriver driver = (IOSDriver) driverConfigurator.createDriver(getDriversSettings(), getAppSettings());
-        return driver;
+        return (IOSDriver) driverConfigurator.createDriver(getDriversSettings(), getAppSettings());
     }
 
     @Bean
     @Qualifier("ios")
     public DriversSettings getDriversSettings() {
-        return iSettingsLoader.loadDriverSettings(System.getProperty(PLATFORM));
+        return iSettingsLoader.loadDriverSettings(System.getenv().get(PLATFORM));
     }
 
     @Bean
     @Qualifier("ios")
     public AppSettings getAppSettings() {
-        return iSettingsLoader.loadAppSettings(System.getProperty(USER));
+        return iSettingsLoader.loadAppSettings(System.getenv().get(USER));
     }
 
     @Bean
     @Qualifier("ios")
     public TestSettings getTestSettings() {
-        return iSettingsLoader.loadTestSettings(System.getProperty(TEST_TYPE));
+        return iSettingsLoader.loadTestSettings(System.getenv().get(TEST_TYPE));
     }
 
 

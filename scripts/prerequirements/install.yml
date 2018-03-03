@@ -1,0 +1,36 @@
+# =======
+# Everything that you need to run tests
+# =======
+- hosts: localhost
+  tasks:
+    - name: Install appuim doctor
+      npm:
+        name: appium-doctor
+        path: /etc/npm_modules
+    - name: Install appium
+      npm:
+        name: appium
+        version: 1.7.2
+        path: /etc/npm_modules
+    - homebrew:
+        name: libimobiledevice
+        state: head
+        update_homebrew: yes
+    - homebrew:
+        name: ideviceinstaller
+    - homebrew:
+        name: carthage
+    - name: Install appium
+      npm:
+        name: ios-deploy
+
+- hosts: localhost
+
+  roles:
+    - java8
+#    - androidsdk
+
+  vars:
+    java_set_javahome: true
+    java_version: 8
+    java_subversion: 121
