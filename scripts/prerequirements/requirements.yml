@@ -1,0 +1,9 @@
+- src: git+https://github.com/Shashikant86/iOS-Dev-Ansible
+  version: master
+  name: macos
+
+- src: williamyeh.oracle-java
+  name: java8
+
+- src: git+https://github.com/rcastells/ansible/tree/master/roles/androidsdk
+  name: androidsdk

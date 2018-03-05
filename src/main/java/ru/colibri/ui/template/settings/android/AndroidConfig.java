@@ -39,18 +39,18 @@ public class AndroidConfig {
     @Bean
     @Qualifier("android")
     public DriversSettings getDriversSettings() {
-        return iSettingsLoader.loadDriverSettings(System.getProperty(PLATFORM));
+        return iSettingsLoader.loadDriverSettings(System.getenv().get(PLATFORM));
     }
 
     @Bean
     @Qualifier("android")
     public AppSettings getAppSettings() {
-        return iSettingsLoader.loadAppSettings(System.getProperty(USER));
+        return iSettingsLoader.loadAppSettings(System.getenv().get(USER));
     }
 
     @Bean
     @Qualifier("android")
     public TestSettings getTestSettings() {
-        return iSettingsLoader.loadTestSettings(System.getProperty(TEST_TYPE));
+        return iSettingsLoader.loadTestSettings(System.getenv().get(TEST_TYPE));
     }
 }

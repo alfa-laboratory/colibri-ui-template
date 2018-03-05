@@ -1,13 +1,15 @@
 package ru.colibri.ui.template.settings.ios;
 
+import com.google.common.collect.ImmutableList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.colibri.ui.core.settings.AppSettings;
 import ru.colibri.ui.core.settings.DriversSettings;
 import ru.colibri.ui.settings.general.PropertyUtils;
 import ru.colibri.ui.settings.loaders.AbsSettingsLoader;
+import ru.colibri.ui.template.providers.NodeProvider;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -23,6 +25,9 @@ import static ru.colibri.ui.template.names.PropertyNames.*;
 @Qualifier("ios")
 public class IOSSettingsLoader extends AbsSettingsLoader {
     private static final String DEFAULT_PATH_TEMPLATE = "src/test/resources/environment/%s/environmentIOS.properties";
+
+    @Autowired
+    NodeProvider nodeProvider;
 
     @Override
     public AppSettings loadAppSettings(String userName) {
@@ -61,17 +66,32 @@ public class IOSSettingsLoader extends AbsSettingsLoader {
     }
 
     private List<String> createPackageList() {
-        List<String> packageList = new ArrayList<>(2);
-        packageList.add("ru.colibri.ui.steps.general");
-        packageList.add("ru.colibri.ui.steps.ios");
-        packageList.add("ru.colibri.ui.template.steps.general");
-        packageList.add("ru.colibri.ui.template.steps.ios");
-        return packageList;
+        return ImmutableList.of("ru.colibri.ui.steps.general",
+                "ru.colibri.ui.steps.ios",
+                "ru.colibri.ui.template.steps.general",
+                "ru.colibri.ui.template.steps.ios");
     }
 
+    //Для симулятора и железки сборки отличаются и не запускаются если перепутть платформу запуска
+    // Здесь может быть добавлена логика выбора сборки симулятор/девайс
     private void loadArtifactByRemoteRepo(Properties props) {
         String remoteFilePath = props.getProperty(REMOTE_FILE_PATH);
         remoteFilePath = format(remoteFilePath, System.getProperty(BUILD_VERSION));
         takeArtifact(remoteFilePath, props.getProperty(FILE_PATH));
+    }
+
+
+    //todo надо убрать методы в абстрактный класс
+    private void startAppiumNodeIfNeed(String platformName) {
+        if (platformName.contains("ci")) {
+            nodeProvider.startNode();
+        }
+    }
+
+    private String prepareAppiumURL(Properties properties, String platformName) {
+        return platformName.contains("ci")
+                ? properties.getProperty(APPIUM_REMOTE_URL)
+                : properties.getProperty(APPIUM_LOCAL_URL);
+
     }
 }

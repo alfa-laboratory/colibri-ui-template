@@ -32,14 +32,6 @@ public class AndroidStories extends AbstractStories {
     @Qualifier("android")
     private AppiumDriver driver;
 
-    public AndroidStories() {
-        super();
-        System.setProperty(ColibriStartFlags.USER, "6016680");
-        System.setProperty(ColibriStartFlags.PLATFORM, "android6");
-        System.setProperty(ColibriStartFlags.TEST_TYPE, "smoke");
-        System.setProperty(ColibriStartFlags.BUILD_VERSION, "8.4.0.7");
-    }
-
     @Before
     public void before() {
         initPageProvider();
